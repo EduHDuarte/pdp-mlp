@@ -1,8 +1,8 @@
 C_SOURCES = $(wildcard matrix/*.c neural/*.c util/*.c *.c)
 HEADERS = $(wildcard matrix/*.h neural/*.h util/*.h *.h)
 OBJ = ${C_SOURCES:.c=.o}
-DEBUGFLAGS = -g -fno-omit-frame-pointer
-CFLAGS = -fopenmp -ftree-vectorize -fopt-info-vec
+DEBUGFLAGS = -g 
+CFLAGS = -fopenmp -march=native -ffast-math
 
 MAIN = main
 CC = /usr/bin/gcc
