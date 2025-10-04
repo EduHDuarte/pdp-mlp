@@ -1,6 +1,9 @@
 #include "ops.h"
+#include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
+
+#define SIGMOID(x) (1.0 / (1.0 + exp(-x)))
 
 int check_dimensions(Matrix *m1, Matrix *m2) {
 	if (m1->rows == m2->rows && m1->cols == m2->cols) return 1;
@@ -60,7 +63,7 @@ Matrix* apply(double (*func)(double), Matrix* m) {
 	# pragma omp parallel for collapse(2)
 	for (int i = 0; i < m->rows; i++) {
 		for (int j = 0; j < m->cols; j++) {
-			mat->entries[i][j] = (*func)(m->entries[i][j]);
+			mat->entries[i][j] = SIGMOID(m->entries[i][j]);
 		}
 	}
 	return mat;
