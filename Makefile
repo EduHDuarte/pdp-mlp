@@ -1,21 +1,19 @@
 C_SOURCES = $(wildcard matrix/*.c neural/*.c util/*.c *.c)
 HEADERS = $(wildcard matrix/*.h neural/*.h util/*.h *.h)
 OBJ = ${C_SOURCES:.c=.o}
-CFLAGS = -fopenmp
+DEBUGFLAGS = -g -fno-omit-frame-pointer
+CFLAGS = -O2 -fopenmp
 
 MAIN = main
 CC = /usr/bin/gcc
 LINKER = /usr/bin/ld
 
-run: ${MAIN}
-	./${MAIN}
-
 main: ${OBJ}
-	${CC} ${CFLAGS} $^ -o $@ -lm
+	${CC} ${CFLAGS} ${DEBUGFLAGS} $^ -o $@ -lm
 
 # Generic rules
 %.o: %.c ${HEADERS}
-	${CC} ${CFLAGS} -c $< -o $@ -lm
+	${CC} ${CFLAGS} ${DEBUGFLAGS} -c $< -o $@ -lm
 
 clean:
 	rm matrix/*.o *.o neural/*.o util/*.o ${MAIN}
