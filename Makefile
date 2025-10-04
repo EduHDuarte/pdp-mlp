@@ -2,7 +2,7 @@ C_SOURCES = $(wildcard matrix/*.c neural/*.c util/*.c *.c)
 HEADERS = $(wildcard matrix/*.h neural/*.h util/*.h *.h)
 OBJ = ${C_SOURCES:.c=.o}
 DEBUGFLAGS = -g 
-CFLAGS = -fopenmp -march=native -ffast-math
+CFLAGS = -fopenmp
 
 MAIN = main
 CC = /usr/bin/gcc

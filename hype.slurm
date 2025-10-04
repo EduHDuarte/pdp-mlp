@@ -12,7 +12,7 @@ source /home/intel/oneapi/vtune/2021.1.1/vtune-vars.sh
 
 export OMP_PROC_BIND=close
 
-for threads in 1 2 5 10 20 40 80; do
+for threads in 10 20 40; do
     export OMP_NUM_THREADS=$threads
     vtune -collect hpc-performance -result-dir results/vtune_results_$threads ./main
 done
