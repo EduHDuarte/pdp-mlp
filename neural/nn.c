@@ -28,9 +28,9 @@ NeuralNetwork* network_create(int input, int hidden, int output, double lr) {
 void network_train(NeuralNetwork* net, Matrix* input, Matrix* output) {
 	// Feed forward
 	Matrix* hidden_inputs	= dot(net->hidden_weights, input);
-	Matrix* hidden_outputs = apply(sigmoid, hidden_inputs);
+	Matrix* hidden_outputs = apply(hidden_inputs);
 	Matrix* final_inputs = dot(net->output_weights, hidden_outputs);
-	Matrix* final_outputs = apply(sigmoid, final_inputs);
+	Matrix* final_outputs = apply(final_inputs);
 
 	// Find errors
 	Matrix* output_errors = subtract(output, final_outputs);
@@ -140,9 +140,9 @@ double network_predict_imgs(NeuralNetwork* net, Img** imgs, int n) {
 
 Matrix* network_predict(NeuralNetwork* net, Matrix* input_data) {
 	Matrix* hidden_inputs	= dot(net->hidden_weights, input_data);
-	Matrix* hidden_outputs = apply(sigmoid, hidden_inputs);
+	Matrix* hidden_outputs = apply(hidden_inputs);
 	Matrix* final_inputs = dot(net->output_weights, hidden_outputs);
-	Matrix* final_outputs = apply(sigmoid, final_inputs);
+	Matrix* final_outputs = apply(final_inputs);
 	Matrix* result = softmax(final_outputs);
 
 	matrix_free(hidden_inputs);

@@ -13,7 +13,7 @@ int check_dimensions(Matrix *m1, Matrix *m2) {
 Matrix* multiply(Matrix *m1, Matrix *m2) {
 	if (check_dimensions(m1, m2)) {
 		Matrix *m = matrix_create(m1->rows, m1->cols);
-		#pragma omp parallel for collapse(2)
+		#pragma omp parallel for
 		for (int i = 0; i < m1->rows; i++) {
 			for (int j = 0; j < m2->cols; j++) {
 				m->entries[i][j] = m1->entries[i][j] * m2->entries[i][j];
@@ -29,7 +29,7 @@ Matrix* multiply(Matrix *m1, Matrix *m2) {
 Matrix* add(Matrix *m1, Matrix *m2) {
 	if (check_dimensions(m1, m2)) {
 		Matrix *m = matrix_create(m1->rows, m1->cols);
-		#pragma omp parallel for collapse(2)
+		#pragma omp parallel for
 		for (int i = 0; i < m1->rows; i++) {
 			for (int j = 0; j < m2->cols; j++) {
 				m->entries[i][j] = m1->entries[i][j] + m2->entries[i][j];
@@ -45,7 +45,7 @@ Matrix* add(Matrix *m1, Matrix *m2) {
 Matrix* subtract(Matrix *m1, Matrix *m2) {
 	if (check_dimensions(m1, m2)) {
 		Matrix *m = matrix_create(m1->rows, m1->cols);
-		#pragma omp parallel for collapse(2)
+		#pragma omp parallel for
 		for (int i = 0; i < m1->rows; i++) {
 			for (int j = 0; j < m2->cols; j++) {
 				m->entries[i][j] = m1->entries[i][j] - m2->entries[i][j];
@@ -58,7 +58,7 @@ Matrix* subtract(Matrix *m1, Matrix *m2) {
 	}
 }
 
-Matrix* apply(double (*func)(double), Matrix* m) {
+Matrix* apply(Matrix* m) {
 	Matrix *mat = matrix_copy(m);
 	#pragma omp parallel for
 	for (int i = 0; i < m->rows; i++) {
@@ -71,12 +71,11 @@ Matrix* apply(double (*func)(double), Matrix* m) {
 
 Matrix* dot(Matrix *m1, Matrix *m2) {
 	if (m1->cols == m2->rows) {
-		double sum;
 		Matrix *m = matrix_create(m1->rows, m2->cols);
-		#pragma omp parallel for collapse(2)
+		#pragma omp parallel for
 		for (int i = 0; i < m1->rows; i++) {
 			for (int j = 0; j < m2->cols; j++) {
-				sum = 0;
+				double sum = 0;
 				for (int k = 0; k < m2->rows; k++) {
 					sum += m1->entries[i][k] * m2->entries[k][j];
 				}
@@ -92,7 +91,7 @@ Matrix* dot(Matrix *m1, Matrix *m2) {
 
 Matrix* scale(double n, Matrix* m) {
 	Matrix* mat = matrix_copy(m);
-	#pragma omp parallel for collapse(2)
+	#pragma omp parallel for
 	for (int i = 0; i < m->rows; i++) {
 		for (int j = 0; j < m->cols; j++) {
 			mat->entries[i][j] *= n;
@@ -103,7 +102,7 @@ Matrix* scale(double n, Matrix* m) {
 
 Matrix* addScalar(double n, Matrix* m) {
 	Matrix* mat = matrix_copy(m);
-	#pragma omp parallel for collapse(2)
+	#pragma omp parallel for
 	for (int i = 0; i < m->rows; i++) {
 		for (int j = 0; j < m->cols; j++) {
 			mat->entries[i][j] += n;
@@ -114,7 +113,7 @@ Matrix* addScalar(double n, Matrix* m) {
 
 Matrix* transpose(Matrix* m) {
 	Matrix* mat = matrix_create(m->cols, m->rows);
-	#pragma omp parallel for collapse(2)
+	#pragma omp parallel for
 	for (int i = 0; i < m->rows; i++) {
 		for (int j = 0; j < m->cols; j++) {
 			mat->entries[j][i] = m->entries[i][j];
