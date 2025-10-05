@@ -5,6 +5,8 @@
 
 #define MAXCHAR 10000
 
+
+
 Img** csv_to_imgs(char* file_string, int number_of_imgs) {
 	FILE *fp;
 	Img** imgs = malloc(number_of_imgs * sizeof(Img*));
@@ -25,7 +27,14 @@ Img** csv_to_imgs(char* file_string, int number_of_imgs) {
 			if (j == 0) {
 				imgs[i]->label = atoi(token);
 			} else {
-				imgs[i]->img_data->entries[(j-1) / 28][(j-1) % 28] = atoi(token) / 256.0;
+				int orig_row = (j-1) / 28;
+				int orig_col = (j-1) % 28;
+
+				if (orig_row % 2 == 0 && orig_col % 2 == 0) {
+					int new_row = orig_row / 2;
+					int new_col = orig_col / 2;
+					imgs[i]->img_data->entries[new_row][new_col] = atoi(token) / 256.0;
+				}
 			}
 			token = strtok(NULL, ",");
 			j++;
