@@ -22,7 +22,7 @@ Img** csv_to_imgs(char* file_string, int number_of_imgs) {
 		int j = 0;
 		fgets(row, MAXCHAR, fp);
 		char* token = strtok(row, ",");
-		imgs[i]->img_data = matrix_create(14, 14);
+		imgs[i]->img_data = matrix_create(28, 28);
 		while (token != NULL) {
 			if (j == 0) {
 				imgs[i]->label = atoi(token);
