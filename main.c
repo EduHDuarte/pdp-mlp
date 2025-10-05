@@ -14,7 +14,7 @@ int main() {
 	//TRAINING
 	int number_imgs = 3000;
 	Img** imgs = csv_to_imgs("./data/mnist_test.csv", number_imgs);
-	NeuralNetwork* net = network_create(194, 300, 10, 0.1);
+	NeuralNetwork* net = network_create(196, 300, 10, 0.1);
 	network_train_batch_imgs(net, imgs, number_imgs);
 	// network_save(net, "testing_net");
 
