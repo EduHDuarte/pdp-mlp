@@ -16,4 +16,4 @@ main: ${OBJ}
 	${CC} ${CFLAGS} ${DEBUGFLAGS} -c $< -o $@ -lm
 
 clean:
-	rm matrix/*.o *.o neural/*.o util/*.o ${MAIN}
+	rm matrix/*.o *.o neural/*.o util/*.o ${MAIN} results out
